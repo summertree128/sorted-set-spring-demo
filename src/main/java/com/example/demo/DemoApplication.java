@@ -27,6 +27,7 @@ public class DemoApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        // Supported commands can be done like this
         ZSetOperations<String, String> zSetOperations = redisTemplate.opsForZSet();
         zSetOperations.add("ranking", "user1", 100);
         zSetOperations.add("ranking", "user2", 200);
@@ -34,6 +35,7 @@ public class DemoApplication implements CommandLineRunner {
 
         System.out.println("Ranking before ZPOPMIN : " + elementsBefore);
 
+        // Unsupported commands need be executed by LettuceConnection like this
         LettuceConnection conn = (LettuceConnection) redisTemplate.getRequiredConnectionFactory().getConnection();
         Object resultObject = conn.execute("ZPOPMIN", new ScoredValueOutput<>(ByteArrayCodec.INSTANCE), "ranking".getBytes());
         ScoredValue scoredValue = (ScoredValue) resultObject;
@@ -43,6 +45,7 @@ public class DemoApplication implements CommandLineRunner {
 
         System.out.println("Popped element : value = " + value + ", score = " + score);
 
+        // Ensure that 1 element is popped from the Sorted Set
         Set elementsAfter = zSetOperations.range("ranking", 0L, 1L);
         System.out.println("Ranking after ZPOPMIN : " + elementsAfter);
     }
