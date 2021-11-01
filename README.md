@@ -11,3 +11,5 @@ You can run this standalone application by following command. Please ensure that
 ```bash
 $ ./mvnw spring-boot:run
 ```
+
+Please note that this demo app doesn't contain proper error handling.
