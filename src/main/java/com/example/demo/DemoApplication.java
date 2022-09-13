@@ -48,5 +48,7 @@ public class DemoApplication implements CommandLineRunner {
         // Ensure that 1 element is popped from the Sorted Set
         Set elementsAfter = zSetOperations.range("ranking", 0L, 1L);
         System.out.println("Ranking after ZPOPMIN : " + elementsAfter);
+
+        conn.close();
     }
 }
